@@ -1,12 +1,12 @@
 require('dotenv').config()
-const fs = require('fs');
-const key = fs.readFileSync('./key.pem');
-const cert = fs.readFileSync('./cert.pem');
 const express = require('express')
 const app = express()
-const http = require('http')
+// const fs = require('fs');
+// const key = fs.readFileSync('./key.pem');
+// const cert = fs.readFileSync('./cert.pem');
 // const https = require('https');
 // const server = https.createServer({key: key, cert: cert }, app);
+const http = require('http')
 const server = http.createServer(app)
 const { Server } = require("socket.io")
 const io = new Server(server)

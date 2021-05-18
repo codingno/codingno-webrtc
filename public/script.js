@@ -3,7 +3,7 @@ const videoGrid = document.getElementById('video-grid')
 const peer = new Peer(undefined, {
     host: '/',
     path: '/peerserver',
-    port: 443,
+    port: peer_port,
     secure: true
 });
 
@@ -20,6 +20,7 @@ navigator.mediaDevices.getUserMedia({
     addVideoStream(myVideo, stream)
 
     peer.on('call', call => {
+        console.log("masuk pak eko")
         call.answer(stream)
         const video = document.createElement('video')
         call.on('stream', userVideoStream => {

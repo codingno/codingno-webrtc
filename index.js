@@ -1,19 +1,23 @@
 require('dotenv').config()
 const express = require('express')
 const app = express()
-// const fs = require('fs');
-// const key = fs.readFileSync('./key.pem');
-// const cert = fs.readFileSync('./cert.pem');
-// const https = require('https');
-// const server = https.createServer({key: key, cert: cert }, app);
+const fs = require('fs');
+const https = require('https');
 const http = require('http')
-const server = http.createServer(app)
+var server;
+if(process.env.APP == 'development') {
+    const key = fs.readFileSync('./key.pem');
+    const cert = fs.readFileSync('./cert.pem');
+    server = https.createServer({key: key, cert: cert }, app);
+} else {
+    server = http.createServer(app)
+}
 const { Server } = require("socket.io")
 const io = new Server(server)
 const { ExpressPeerServer } = require('peer');
 const { v4: uuidv4 } = require('uuid')
 
-const PORT = process.env.PORT || 443
+const PORT = parseInt(process.env.PORT) || 443
 const peerServer = ExpressPeerServer(server);
 
 app.set('view engine', 'ejs')
@@ -27,7 +31,7 @@ app.get('/', (req, res) => {
 
 
 app.get('/:room', (req, res) => {
-    res.render('index', { user_id : req.params.room, peer_port : PORT + 1})
+    res.render('index', { user_id : req.params.room, peer_port : PORT })
 })
 
 io.on('connection', (socket) => {

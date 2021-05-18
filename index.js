@@ -18,11 +18,11 @@ const { ExpressPeerServer } = require('peer');
 const { v4: uuidv4 } = require('uuid')
 
 const PORT = parseInt(process.env.PORT) || 443
-const peerServer = ExpressPeerServer(server);
+const peerServer = ExpressPeerServer(server, { path: "/peerserver"});
 
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
-app.use('/peerserver', peerServer)
+app.use(peerServer)
 
 app.get('/', (req, res) => {
     const user_id = uuidv4()

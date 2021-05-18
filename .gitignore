@@ -1,3 +1,5 @@
+# pem
+*.pem
 # Logs
 logs
 *.log

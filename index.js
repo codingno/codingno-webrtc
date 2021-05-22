@@ -25,13 +25,16 @@ app.use(express.static('public'))
 app.use(peerServer)
 
 app.get('/', (req, res) => {
+    res.render('index')
+})
+app.get('/:type', (req, res) => {
     const user_id = uuidv4()
-    res.redirect(`/${user_id}`)
+    res.redirect(`/${req.params.type}/${user_id}`)
 })
 
 
-app.get('/:room', (req, res) => {
-    res.render('index', { user_id : req.params.room, peer_port : PORT })
+app.get('/:type/:room', (req, res) => {
+    res.render(`${req.params.type}`, { user_id : req.params.room, peer_port : PORT })
 })
 
 io.on('connection', (socket) => {

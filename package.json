@@ -4,7 +4,7 @@
   "description": "simple nodejs webrtc",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js && peerjs --port 3332",
+    "dev": "nodemon index.js",
     "start": "node index.js"
   },
   "repository": {

@@ -33,18 +33,14 @@
     </style>
 </head>
 <body>
-    <input type="text" name="room" id="room">
-    <button onclick="goToRoom('video')">Video</button>
-    <button onclick="goToRoom('audio')">Audio</button>
+    <div id="audio-grid"></div>
+    <script src="/socket.io/socket.io.js" ></script>
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js" ></script>
     <script>
-        function goToRoom(type) {
-           const room = document.getElementById('room').value
-           if(room)
-            window.location.href = `/${type}/${room}`;
-           else
-            window.location.href = `/${type}`;
-        }
+    const user_id = '<%= user_id %>'
+    const peer_port = parseInt('<%= peer_port %>')
     </script>
+    <script src="../audio.js"></script>
     
 </body>
 </html>

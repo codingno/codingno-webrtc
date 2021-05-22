@@ -1,5 +1,5 @@
 const socket = io('/')
-const videoGrid = document.getElementById('video-grid')
+const audioGrid = document.getElementById('audio-grid')
 const peer = new Peer(undefined, {
     host: '/',
     path: '/peerserver',
@@ -8,21 +8,20 @@ const peer = new Peer(undefined, {
 
 const peers = {}
 
-const myVideo = document.createElement('video')
-myVideo.muted = true
-myVideo.id = 'video1'
+const myaudio = document.createElement('audio')
+myaudio.muted = true
+myaudio.id = 'audio1'
 
 navigator.mediaDevices.getUserMedia({
-    video : true,
     audio : true
 }).then( stream => {
-    addVideoStream(myVideo, stream)
+    addaudioStream(myaudio, stream)
 
     peer.on('call', call => {
         call.answer(stream)
-        const video = document.createElement('video')
-        call.on('stream', userVideoStream => {
-            addVideoStream(video, userVideoStream)
+        const audio = document.createElement('audio')
+        call.on('stream', useraudioStream => {
+            addaudioStream(audio, useraudioStream)
         })
     })
 
@@ -42,21 +41,21 @@ peer.on('open', id => {
 
 function connectToNewUser(id, stream) {
     const call = peer.call(id, stream)
-    const video = document.createElement('video')
-    call.on('stream', userVideoStream => {
-        addVideoStream(video, userVideoStream)
+    const audio = document.createElement('audio')
+    call.on('stream', useraudioStream => {
+        addaudioStream(audio, useraudioStream)
     })
     call.on('close', () => {
-        video.remove()
+        audio.remove()
     })
     peers[id] = call
 }
 
-function addVideoStream(video, stream) {
-   video.srcObject = stream
-   video.addEventListener('loadedmetadata', () => {
-       video.play()
+function addaudioStream(audio, stream) {
+   audio.srcObject = stream
+   audio.addEventListener('loadedmetadata', () => {
+       audio.play()
    }) 
-   videoGrid.append(video)
+   audioGrid.append(audio)
 }
 
